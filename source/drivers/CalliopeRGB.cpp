@@ -30,6 +30,49 @@ DEALINGS IN THE SOFTWARE.
 #include "nrf_delay.h"
 #include "nrf_gpio.h"
 
+//the following defines are timed specifically to the sending algorithm in CalliopeRGB.cpp
+//timings for sending to the RGB LED: 
+//logical '0': time HIGH: 0.35 us ±150 ns   time LOW: 0.9 us ±150 ns 
+//logical '1': time HIGH: 0.9 us ±150 ns    time LOW: 0.35 us ±150 ns
+
+static uint8_t PIN = CALLIOPE_PIN_RGB;
+static uint8_t CONST_BIT = 1UL << PIN;
+
+#define RGB_WAIT                            " NOP\n\t"
+
+// sends a logical '1' to the receiver
+#define CALLIOPE_RGB_SEND_HIGH \
+    NRF_GPIO->OUTSET = (CONST_BIT); \
+    __ASM volatile( \
+        RGB_WAIT\
+        RGB_WAIT\
+        RGB_WAIT\
+        RGB_WAIT\
+        RGB_WAIT\
+        RGB_WAIT\
+        RGB_WAIT\
+        RGB_WAIT\
+        RGB_WAIT\
+    ); \
+    NRF_GPIO->OUTCLR = (CONST_BIT);
+
+// sends a logical '0' to the receiver
+#define CALLIOPE_RGB_SEND_LOW \
+    NRF_GPIO->OUTSET = (CONST_BIT); \
+    __ASM volatile(  \
+        RGB_WAIT\
+    );  \
+    NRF_GPIO->OUTCLR = (CONST_BIT);  \
+    __ASM volatile( \
+        RGB_WAIT\
+        RGB_WAIT\
+        RGB_WAIT\
+        RGB_WAIT\
+        RGB_WAIT\
+        RGB_WAIT\
+        RGB_WAIT\
+        RGB_WAIT\
+    );
 
 CalliopeRGB::CalliopeRGB()
 {

@@ -34,9 +34,6 @@ DEALINGS IN THE SOFTWARE.
 //Pin of RGB LED on the MicroBit
 #define CALLIOPE_PIN_RGB                    P0_18
 
-//assembler code: do nothing
-#define RGB_WAIT                            " NOP\n\t"
-
 //Default values for the LED color
 #define RGB_LED_DEFAULT_GREEN               0
 #define RGB_LED_DEFAULT_RED                 0
@@ -46,45 +43,6 @@ DEALINGS IN THE SOFTWARE.
 
 //max light intensity
 #define RGB_LED_MAX_INTENSITY               50
-
-//the following defines are timed specifically to the sending algorithm in CalliopeRGB.cpp
-//timings for sending to the RGB LED: 
-//logical '0': time HIGH: 0.35 us ±150 ns   time LOW: 0.9 us ±150 ns 
-//logical '1': time HIGH: 0.9 us ±150 ns    time LOW: 0.35 us ±150 ns
-
-//sends a logical '1' to the receiver
-#define CALLIOPE_RGB_SEND_HIGH  NRF_GPIO->OUTSET = (1UL << PIN); \
-    __ASM ( \
-        RGB_WAIT \
-        RGB_WAIT \
-        RGB_WAIT \
-        RGB_WAIT \
-        RGB_WAIT \
-        RGB_WAIT \
-        RGB_WAIT \
-        RGB_WAIT \
-        RGB_WAIT \
-    ); \
-    NRF_GPIO->OUTCLR = (1UL << PIN);
-
-
-//sends a logical '0' to the receiver
-#define CALLIOPE_RGB_SEND_LOW   NRF_GPIO->OUTSET = (1UL << PIN); \
-    __ASM (  \
-        RGB_WAIT \
-    );  \
-    NRF_GPIO->OUTCLR = (1UL << PIN);  \
-    __ASM ( \
-        RGB_WAIT \
-        RGB_WAIT \
-        RGB_WAIT \
-        RGB_WAIT \
-        RGB_WAIT \
-        RGB_WAIT \
-        RGB_WAIT \
-        RGB_WAIT \
-    );
-
 
 class CalliopeRGB : public MicroBitComponent
 {   
