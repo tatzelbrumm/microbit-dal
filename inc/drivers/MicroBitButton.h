@@ -31,9 +31,9 @@ DEALINGS IN THE SOFTWARE.
 #include "MicroBitComponent.h"
 #include "MicroBitEvent.h"
 
-#define MICROBIT_PIN_BUTTON_A                   P0_17
-#define MICROBIT_PIN_BUTTON_B                   P0_26
-#define MICROBIT_PIN_BUTTON_RESET               P0_19
+#define MICROBIT_PIN_BUTTON_A                   BUTTON_A
+#define MICROBIT_PIN_BUTTON_B                   BUTTON_B
+#define MICROBIT_PIN_BUTTON_RESET               TGT_NRESET
 
 #define MICROBIT_BUTTON_EVT_DOWN                1
 #define MICROBIT_BUTTON_EVT_UP                  2

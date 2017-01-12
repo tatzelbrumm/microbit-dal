@@ -51,8 +51,9 @@ MicroBitIO::MicroBitIO(int ID_P0, int ID_P1, int ID_P2,
                        int ID_P20, int ID_CAL_P3, int ID_CAL_P7,
                        int ID_CAL_P8, int ID_CAL_P9, int ID_CAL_P13, 
                        int ID_CAL_P14, int ID_CAL_P15, int ID_CAL_P22,
+                       int ID_CAL_P26, int ID_CAL_P27,
                        int ID_CAL_P28, int ID_CAL_P29, int ID_CAL_P30) :
-    P0 (ID_P0, MICROBIT_PIN_P0, PIN_CAPABILITY_DIGITAL),            //P0 is the left most pad (ANALOG/DIGITAL/TOUCH)
+    P0 (ID_P0, MICROBIT_PIN_P0, PIN_CAPABILITY_DIGITAL),        //P0 is the left most pad (DIGITAL/TOUCH)
     P1 (ID_P1, MICROBIT_PIN_P1, PIN_CAPABILITY_ALL),            //P1 is the middle pad (ANALOG/DIGITAL/TOUCH)
     P2 (ID_P2, MICROBIT_PIN_P2, PIN_CAPABILITY_ALL),            //P2 is the right most pad (ANALOG/DIGITAL/TOUCH)
     P3 (ID_P3, MICROBIT_PIN_P3, PIN_CAPABILITY_ALL),            //COL1 (ANALOG/DIGITAL)
@@ -65,16 +66,18 @@ MicroBitIO::MicroBitIO(int ID_P0, int ID_P1, int ID_P2,
     P11(ID_P11,MICROBIT_PIN_P11,PIN_CAPABILITY_DIGITAL),        //BTN_B
     P19(ID_P19,MICROBIT_PIN_P19,PIN_CAPABILITY_DIGITAL),        //SCL
     P20(ID_P20,MICROBIT_PIN_P20,PIN_CAPABILITY_DIGITAL),        //SDA
-    CAL_P3(ID_CAL_P3, CALLIOPE_PIN_P3, PIN_CAPABILITY_ALL),     // touch pin -- TODO: microphone in rev 0.3
+    CAL_P3(ID_CAL_P3, CALLIOPE_PIN_P3, PIN_CAPABILITY_ALL),     // microphone analog in
     CAL_P7(ID_CAL_P7, CALLIOPE_PIN_P7, PIN_CAPABILITY_DIGITAL), //led control
     CAL_P8(ID_CAL_P8, CALLIOPE_PIN_P8, PIN_CAPABILITY_DIGITAL), //led control
     CAL_P9(ID_CAL_P9, CALLIOPE_PIN_P9, PIN_CAPABILITY_DIGITAL), //led control
     CAL_P13(ID_CAL_P13,CALLIOPE_PIN_P13,PIN_CAPABILITY_DIGITAL),//led control
     CAL_P14(ID_CAL_P14,CALLIOPE_PIN_P14,PIN_CAPABILITY_DIGITAL),//led control
     CAL_P15(ID_CAL_P15,CALLIOPE_PIN_P15,PIN_CAPABILITY_DIGITAL),//led control
-    CAL_P22(ID_CAL_P22,CALLIOPE_PIN_P22,PIN_CAPABILITY_ALL),    //right touch pad -- TODO: TOUCH PAD 3 in rev 0.3
+    CAL_P22(ID_CAL_P22,CALLIOPE_PIN_P22,PIN_CAPABILITY_ALL),    //right touch pad
+    CAL_P26(ID_CAL_P26,CALLIOPE_PIN_P26,PIN_CAPABILITY_AD),     //right grove, UART RX, analog 1
+    CAL_P27(ID_CAL_P27,CALLIOPE_PIN_P27,PIN_CAPABILITY_AD),     //right grove, UART TX, analog 2
     CAL_P28(ID_CAL_P28,CALLIOPE_PIN_P28,PIN_CAPABILITY_DIGITAL),//motor driver sleep pin
-    CAL_P29(ID_CAL_P29,CALLIOPE_PIN_P29,PIN_CAPABILITY_AD),     //motor driver pin 1
-    CAL_P30(ID_CAL_P30,CALLIOPE_PIN_P30,PIN_CAPABILITY_AD)      //motor driver pin 2 / sound
+    CAL_P29(ID_CAL_P29,CALLIOPE_PIN_P29,PIN_CAPABILITY_DIGITAL),     //motor driver pin 1
+    CAL_P30(ID_CAL_P30,CALLIOPE_PIN_P30,PIN_CAPABILITY_DIGITAL)      //motor driver pin 2 / sound
 {
 }

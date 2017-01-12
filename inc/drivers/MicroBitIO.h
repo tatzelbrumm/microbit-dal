@@ -66,6 +66,8 @@ class MicroBitIO
 	MicroBitPin			 CAL_P14;
 	MicroBitPin			 CAL_P15;
 	MicroBitPin			 CAL_P22;
+	MicroBitPin			 CAL_P26;
+	MicroBitPin			 CAL_P27;
     MicroBitPin			 CAL_P28;
     MicroBitPin			 CAL_P29;
     MicroBitPin			 CAL_P30;
@@ -85,6 +87,7 @@ class MicroBitIO
                int ID_P20, int ID_CAL_P3, int ID_CAL_P7,
                int ID_CAL_P8, int ID_CAL_P9, int ID_CAL_P13,
                int ID_CAL_P14, int ID_CAL_P15, int ID_CAL_P22,
+			   int ID_CAL_P26, int ID_CAL_P27,
                int ID_CAL_P28, int ID_CAL_P29, int ID_CAL_30);
 };
 
