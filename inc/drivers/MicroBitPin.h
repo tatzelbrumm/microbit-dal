@@ -54,7 +54,7 @@ DEALINGS IN THE SOFTWARE.
 #define MICROBIT_PIN_P7                     P0_11       //COL8
 #define MICROBIT_PIN_P9                     P0_10       //COL7
 #define MICROBIT_PIN_P10                    P0_6        //COL3 (ANALOG/DIGITAL)
-#define MICROBIT_PIN_P11                    P0_26       //BTN_B
+#define MICROBIT_PIN_P11                    P0_16       //BTN_B
 #define MICROBIT_PIN_P19                    P0_19       //SCL
 #define MICROBIT_PIN_P20                    P0_20       //SDA
 //CALLIOPE MINI pins added here
@@ -66,6 +66,8 @@ DEALINGS IN THE SOFTWARE.
 #define CALLIOPE_PIN_P14                    P0_14       //LED control / IO pin
 #define CALLIOPE_PIN_P15                    P0_15       //LED control / IO pin
 #define CALLIOPE_PIN_P22                    P0_22       //unused (TODO: touch 3 in rev 0.2)
+#define CALLIOPE_PIN_P26                    P0_26       //right grove, rx, analog
+#define CALLIOPE_PIN_P27                    P0_27       //right grove, tx, analog
 #define CALLIOPE_PIN_P28                    P0_28       //motor driver sleep pin
 #define CALLIOPE_PIN_P29                    P0_29       //motor driver pin 1 / sound
 #define CALLIOPE_PIN_P30                    P0_30       //motor driver pin 2 / sound
