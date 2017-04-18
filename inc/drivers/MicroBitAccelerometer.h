@@ -37,7 +37,7 @@ DEALINGS IN THE SOFTWARE.
 /**
   * Relevant pin assignments
   */
-#define MICROBIT_PIN_ACCEL_DATA_READY          P0_28
+#define MICROBIT_PIN_ACCEL_DATA_READY          P0_27
 
 /**
   * Status flags

@@ -557,7 +557,6 @@ int MicroBitAccelerometer::getRange()
 int MicroBitAccelerometer::getX(MicroBitCoordinateSystem system)
 {
     updateSample();
-
     switch (system)
     {
         case SIMPLE_CARTESIAN:

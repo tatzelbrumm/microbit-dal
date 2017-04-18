@@ -56,22 +56,14 @@ DEALINGS IN THE SOFTWARE.
   */
 int MicroBitAccelerometer::configure()
 {
-    // BMX_DEBUG("RUN BMX055 start\r\n");
 
     id =    BMX055_ACC_ADDRESS<<1;
     wait_ms(100);
 
     i2c.start();
-    //        BMX_DEBUG("id = %x\r\n",v);
-    //        BMX_DEBUG("address = %x\r\n",address);
-
-
-    //    BMX_DEBUG("RUN BMX055 id found\r\n");
     // start with all sensors in default mode with all registers reset
     writeByte(BMX055_ACC_ADDRESS,  BMX055_ACC_BGW_SOFTRESET, 0xB6);  // reset accelerometer
     wait_ms(1000); // Wait for all registers to reset
-
-    //    BMX_DEBUG("RUN BMX055 after reset\r\n");
 
     // Configure accelerometer
     writeByte(BMX055_ACC_ADDRESS, BMX055_ACC_PMU_RANGE, Ascale & 0x0F); // Set accelerometer full range
@@ -241,12 +233,9 @@ int MicroBitAccelerometer::readCommand(uint8_t reg, uint8_t* buffer, int length)
     if (buffer == NULL || length <= 0 )
         return MICROBIT_INVALID_PARAMETER;
 
-    //    BMX_DEBUG("start write to address %x \r\n", address);
-
     result = i2c.write(address, (const char *)&reg, 1, true);
     if (result !=0)
         return MICROBIT_I2C_ERROR;
-    //    BMX_DEBUG("start read from  address %x \r\n", address);
 
     result = i2c.read(address, (char *)buffer, length);
     if (result !=0)
@@ -273,8 +262,6 @@ int MicroBitAccelerometer::readCommand(uint8_t reg, uint8_t* buffer, int length)
  */
 MicroBitAccelerometer::MicroBitAccelerometer(MicroBitI2C& _i2c, uint16_t address, uint16_t id) : sample(), int1(MICROBIT_PIN_ACCEL_DATA_READY), i2c(_i2c)
 {
-
-	//    BMX_DEBUG("Constructor\r\n");
 
     // Store our identifiers.
     this->id = id;
@@ -348,7 +335,6 @@ int MicroBitAccelerometer::updateSample()
     // n.b. Default is Active LO. Interrupt is cleared in data read.
     if(!int1)
     {
-	    //	    BMX_DEBUG("data ready\r\n");
 	int16_t ndata[3];
 	readAccelData((int16_t *) ndata);  // Read the x/y/z adc values
 
@@ -359,13 +345,11 @@ int MicroBitAccelerometer::updateSample()
         sample.y = ndata[0];
         sample.z = ndata[2];
 
-//	BMX_DEBUG("x=%d y=%d x=%d y=%d\r\n",data[0], data[1], data[2], data[3]);
         // Normalize the data in the 0..1024 range.
 	/*	sample.x *= 8;
         sample.y *= 8;
         sample.z *= 8;
 	*/
-//	 BMX_DEBUG("x=%d y=%d z=%d\r\n",sample.x, sample.y, sample.z);
 #if CONFIG_ENABLED(USE_ACCEL_LSB)
         // Add in LSB values.
         sample.x += (data[1] / 64);
@@ -386,11 +370,7 @@ int MicroBitAccelerometer::updateSample()
 
         // Indicate that a new sample is available
         MicroBitEvent e(id, MICROBIT_ACCELEROMETER_EVT_DATA_UPDATE);
-    } else {
-	    // BMX_DEBUG("data not ready\r\n");
     }
-
-
     return MICROBIT_OK;
 };
 
@@ -520,7 +500,6 @@ void MicroBitAccelerometer::updateGesture()
     // Again, during such spikes, these event take priority of the posture of the device.
     // For these events, we don't perform any low pass filtering.
     int force = instantaneousAccelerationSquared();
-    //BMX_DEBUG("force=%d\r\n",force);
 
     if (force > MICROBIT_ACCELEROMETER_2G_THRESHOLD)
     {
@@ -660,7 +639,6 @@ int MicroBitAccelerometer::getRange()
   */
 int MicroBitAccelerometer::getX(MicroBitCoordinateSystem system)
 {
-	//	BMX_DEBUG("before\r\n");
 	updateSample();
 
     switch (system)

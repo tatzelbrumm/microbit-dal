@@ -27,10 +27,11 @@ DEALINGS IN THE SOFTWARE.
 #define MICROBIT_COMPASS_CALIBRATOR_H
 
 #include "MicroBitConfig.h"
-#include "MicroBitCompass.h"
 #ifdef TARGET_NRF51_CALLIOPE
+#include "MicroBitCompass-bmx.h"
 #include "MicroBitAccelerometer-bmx.h"
 #else
+#include "MicroBitCompass.h"
 #include "MicroBitAccelerometer.h"
 #endif
 #include "MicroBitDisplay.h"
