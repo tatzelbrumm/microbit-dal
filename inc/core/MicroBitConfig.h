@@ -413,7 +413,6 @@ extern uint32_t __etext;
 #ifndef MICROBIT_DBG
 #define MICROBIT_DBG                            1
 #endif
-#define MICROBIT_DBG                            1
 
 // Enable this to receive diagnostic messages from the heap allocator via the USB serial interface.
 // n.b. This requires MICROBIT_DBG to be defined.
