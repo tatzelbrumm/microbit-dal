@@ -69,7 +69,6 @@ void MicroBitCompass::init(uint16_t id, uint16_t address)
 {
     this->id = id;
     this->address = address;
-    BMX_DEBUG("in init\r\n");
 
 
     // Select 10Hz update rate, with oversampling, and enable the device.
