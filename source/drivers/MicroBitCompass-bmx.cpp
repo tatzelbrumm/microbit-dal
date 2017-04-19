@@ -424,25 +424,7 @@ int MicroBitCompass::updateSample()
 	    sample.z = magData[2];
 	    MicroBitEvent e(id, MICROBIT_COMPASS_EVT_DATA_UPDATE);
     }
-    /*
-  unsigned int d1, d2;
-    // Poll interrupt line from compass (Active HI).
-    // Interrupt is cleared on data read of MAG_OUT_X_MSB.
-    if(int1)
-    {
-        d1 = readByte(BMX055_MAG_ADDRESS, BMX055_MAG_XOUT_MSB);
-        d2 = readByte(BMX055_MAG_ADDRESS, BMX055_MAG_XOUT_LSB);
-	sample.x = (d1 << 8 | d2)>>3;
-        d1 = readByte(BMX055_MAG_ADDRESS, BMX055_MAG_YOUT_MSB);
-        d2 = readByte(BMX055_MAG_ADDRESS, BMX055_MAG_YOUT_LSB);
-	sample.y = (d1 << 8 | d2)>>3;
-        d1 = readByte(BMX055_MAG_ADDRESS, BMX055_MAG_ZOUT_MSB);
-        d2 = readByte(BMX055_MAG_ADDRESS, BMX055_MAG_ZOUT_LSB);
-	sample.z = (d1 << 8 | d2)>>3;
-        // Indicate that a new sample is available
-        MicroBitEvent e(id, MICROBIT_COMPASS_EVT_DATA_UPDATE);
-    }
-    */
+  
     return MICROBIT_OK;
 }
 
