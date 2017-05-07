@@ -73,7 +73,7 @@ und Björn Eberhardt GbR by arrangement with Calliope GbR.
 #define CALLIOPE_PIN_MOTOR_IN1              MOTOR_IN1     // motor driver pin 1 / sound
 #define CALLIOPE_PIN_MOTOR_IN2              MOTOR_IN2     // motor driver pin 2 / sound
 #define CALLIOPE_PIN_RGB_LED                RGBLED        // WS2812b RGB data pin
-#define CALLIOPE_PIN_ACCEL_INT              P0_27         // accelerometer interrupt pin
+#define CALLIOPE_PIN_ACCEL_INT              P0_21         // accelerometer interrupt pin
 
 #else
 
