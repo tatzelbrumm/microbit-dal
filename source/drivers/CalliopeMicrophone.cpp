@@ -35,6 +35,8 @@ uint8_t* CalliopeMicrophone::rec_buffer;
 int16_t CalliopeMicrophone::rec_len;
 int16_t CalliopeMicrophone::rec_pos;
 uint8_t CalliopeMicrophone::pwm_tick;
+uint16_t CalliopeMicrophone::upper_threshold;
+uint16_t CalliopeMicrophone::lower_threshold;
 AnalogIn CalliopeMicrophone::micpin(MIC);
 mbed::Ticker CalliopeMicrophone::rec_ticker;
 bool CalliopeMicrophone::active = false;
@@ -54,14 +56,14 @@ CalliopeMicrophone::~CalliopeMicrophone()
 
 
 //PWM sampling function: records sound from microphone and converts to 1-bit PWM data until buffer is full
-void CalliopeMicrophone::recordSample(uint8_t* buffer, int16_t len, int16_t sample_rate)
+void CalliopeMicrophone::recordSample(uint8_t* buffer, int16_t len, uint16_t sensitivity, int16_t sample_rate)
 {
     //refuse to run if already recording
     if (active) return;
     
     //return on invalid parameters
     if (len < CALLIOPE_MIN_SAMPLE_BUFFER_SIZE || sample_rate > CALLIOPE_MAX_SAMPLE_RATE 
-	|| sample_rate < CALLIOPE_MIN_SAMPLE_RATE) return;
+	|| sample_rate < CALLIOPE_MIN_SAMPLE_RATE || sensitivity > CALLIOPE_MIC_MAX_SENSITIVITY) return;
     
     //set recording mode
     active = true;
@@ -71,6 +73,8 @@ void CalliopeMicrophone::recordSample(uint8_t* buffer, int16_t len, int16_t samp
     rec_len = len;
     rec_pos = 0;
     pwm_tick = 1;
+    upper_threshold = CALLIOPE_MIC_BASE_LEVEL + (80 - sensitivity);
+    lower_threshold = CALLIOPE_MIC_BASE_LEVEL - (80 - sensitivity);
     
     //set up interrupt service
     rec_ticker.attach_us(&updateInput, static_cast<timestamp_t>(1000000 / sample_rate));
@@ -103,8 +107,8 @@ void CalliopeMicrophone::updateInput()
     uint16_t val = micpin.read_u16();
     
     //update pwm period counter and write to buffer if input crossed threshold or counter wrapped
-    if (pwm_tick && ((!(rec_pos & 1) && val > CALLIOPE_SAMPLING_THRESHOLD_LOWER) 
-	|| ((rec_pos & 1) && val < CALLIOPE_SAMPLING_THRESHOLD_UPPER))) ++pwm_tick;
+    if (pwm_tick && ((!(rec_pos & 1) && val > lower_threshold) 
+	|| ((rec_pos & 1) && val < upper_threshold))) ++pwm_tick;
     else
     {
         rec_buffer[rec_pos] = pwm_tick;

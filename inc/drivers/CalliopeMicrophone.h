@@ -32,15 +32,15 @@ DEALINGS IN THE SOFTWARE.
 #include "mbed.h"
 #include "MicroBitIO.h"
 #include "MicroBitComponent.h"
-// #include "DynamicPwm.h"
 
 
 #define CALLIOPE_DEFAULT_SAMPLE_RATE                8000        //default sample rate for PWM sampling
 #define CALLIOPE_MAX_SAMPLE_RATE                    11025       //max sample rate, limited by sample loop exec time
 #define CALLIOPE_MIN_SAMPLE_RATE                    1           //min sample rate
 #define CALLIOPE_MIN_SAMPLE_BUFFER_SIZE             1           //min sample buffer size
-#define CALLIOPE_SAMPLING_THRESHOLD_UPPER           524         //threshold for registering output as "1"
-#define CALLIOPE_SAMPLING_THRESHOLD_LOWER           515         //threshold for registering output as "0"
+#define CALLIOPE_MIC_DEFAULT_SENSITIVITY            48          //mic sensitivity level (0..77)
+#define CALLIOPE_MIC_MAX_SENSITIVITY                77
+#define CALLIOPE_MIC_BASE_LEVEL                     518         //mic input null level      
 
 class CalliopeMicrophone : public MicroBitComponent
 {    
@@ -52,7 +52,8 @@ class CalliopeMicrophone : public MicroBitComponent
         ~CalliopeMicrophone();
 	
 	//function to initialize recording
-        static void recordSample(uint8_t* buffer, int16_t len, int16_t sample_rate = CALLIOPE_DEFAULT_SAMPLE_RATE);
+        static void recordSample(uint8_t* buffer, int16_t len, 
+		uint16_t sensitivity = CALLIOPE_MIC_DEFAULT_SENSITIVITY, int16_t sample_rate = CALLIOPE_DEFAULT_SAMPLE_RATE);
 	//function to stop/abort recording
 	static void stopRecording();
 	//interrupt service, do not call directly!
@@ -65,6 +66,8 @@ class CalliopeMicrophone : public MicroBitComponent
 	static int16_t rec_len;
 	static int16_t rec_pos;
 	static uint8_t pwm_tick;
+	static uint16_t upper_threshold;
+	static uint16_t lower_threshold;
 	static AnalogIn micpin;
 	static mbed::Ticker rec_ticker;
         static bool active;

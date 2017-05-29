@@ -152,8 +152,8 @@ void CalliopeSoundMotor::PWM_init()
 //functions to control the motor
 void CalliopeSoundMotor::motorOn(int8_t duty_percent)
 {
-    //if value is out of bounds, do nothing
-    if((duty_percent > 100) || (duty_percent < -100)) return;
+    //if value is out of bounds or PWM sample playback is active, do nothing
+    if((duty_percent > 100) || (duty_percent < -100) || mode > 3) return;
 
     //set mode to single motor use
     mode = 1;
@@ -300,8 +300,8 @@ void CalliopeSoundMotor::motorSleep()
 
 void CalliopeSoundMotor::motorAOn(uint8_t duty_percent)
 {
-    //if value is out of bounds, do nothing
-    if(duty_percent > 100) return;
+    //if value is out of bounds or PWM sample playback is active, do nothing
+    if(duty_percent > 100 || mode > 3) return;
 
     //save current setting
     duty_motor_A_percent = duty_percent;
@@ -363,8 +363,8 @@ void CalliopeSoundMotor::motorAOn(uint8_t duty_percent)
 
 void CalliopeSoundMotor::motorBOn(uint8_t duty_percent)
 {
-    //if value is out of bounds, do nothing
-    if(duty_percent > 100) return;
+    //if value is out of bounds or PWM sample playback is active, do nothing
+    if(duty_percent > 100 || mode > 3) return;
 
     //save current setting
     duty_motor_B_percent = duty_percent;
@@ -400,7 +400,7 @@ void CalliopeSoundMotor::motorBOn(uint8_t duty_percent)
     motor_AB_current_use |= 0x02;
 
     //values for duty cycle 0
-    if(uint8_t(duty_motor_B_percent/2) == 0 || (motor_AB_current_use == 0x02)) {
+    if(uint8_t(duty_motor_A_percent/2) == 0 || (motor_AB_current_use == 0x02)) {
         nrf_gpio_pin_clear(CALLIOPE_PIN_MOTOR_IN1);
         nrf_gpio_pin_clear(CALLIOPE_PIN_MOTOR_IN2);
     }
