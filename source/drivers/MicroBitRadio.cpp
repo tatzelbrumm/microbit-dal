@@ -107,8 +107,8 @@ MicroBitRadio::MicroBitRadio(uint16_t id) : datagram(*this), event (*this)
 {
     this->id = id;
     this->status = 0;
-	this->group = MICROBIT_RADIO_DEFAULT_GROUP;
-	this->queueDepth = 0;
+    this->group = MICROBIT_RADIO_DEFAULT_GROUP;
+    this->queueDepth = 0;
     this->rssi = 0;
     this->rxQueue = NULL;
     this->rxBuf = NULL;
@@ -302,7 +302,8 @@ int MicroBitRadio::enable()
     // and reception of data, also contains a LENGTH field, two optional additional 1 byte fields (S0 and S1) and a CRC calculation.
     // Configure the packet format for a simple 8 bit length field and no additional fields.
     NRF_RADIO->PCNF0 = 0x00000008;
-    NRF_RADIO->PCNF1 = 0x02040000 | MICROBIT_RADIO_MAX_PACKET_SIZE;
+    //CM2018MAR26: Do not whiten
+    NRF_RADIO->PCNF1 = 0x00040000 | MICROBIT_RADIO_MAX_PACKET_SIZE;
 
     // Most communication channels contain some form of checksum - a mathematical calculation taken based on all the data
     // in a packet, that is also sent as part of the packet. When received, this calculation can be repeated, and the results
@@ -488,7 +489,7 @@ int MicroBitRadio::send(FrameBuffer *buffer)
     if (buffer->length > MICROBIT_RADIO_MAX_PACKET_SIZE + MICROBIT_RADIO_HEADER_SIZE - 1)
         return MICROBIT_INVALID_PARAMETER;
 
-    // Firstly, disable the Radio interrupt. We want to wait until the trasmission completes.
+    // Firstly, disable the Radio interrupt. We want to wait until the transmission completes.
     NVIC_DisableIRQ(RADIO_IRQn);
 
     // Turn off the transceiver.
