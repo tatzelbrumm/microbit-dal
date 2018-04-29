@@ -70,7 +70,7 @@ extern "C" void RADIO_IRQHandler(void)
     if(NRF_RADIO->EVENTS_END)
     {
         NRF_RADIO->EVENTS_END = 0;
-        if(NRF_RADIO->CRCSTATUS == 1)
+        if (1) //(NRF_RADIO->CRCSTATUS == 1) pay no attention to CRC
         {
             int sample = (int)NRF_RADIO->RSSISAMPLE;
 
@@ -311,7 +311,8 @@ int MicroBitRadio::enable()
     // and we know we can't trust it. The nrf51822 RADIO uses a CRC for this - a very effective checksum calculation.
     //
     // Enable automatic 16bit CRC generation and checking, and configure how the CRC is calculated.
-    NRF_RADIO->CRCCNF = RADIO_CRCCNF_LEN_Two;
+    //CM2018APR02: Disable CRC
+    NRF_RADIO->CRCCNF = RADIO_CRCCNF_LEN_Disabled;
     NRF_RADIO->CRCINIT = 0xFFFF;
     NRF_RADIO->CRCPOLY = 0x11021;
 
