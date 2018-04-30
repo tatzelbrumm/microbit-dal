@@ -59,6 +59,14 @@ MicroBitRadio* MicroBitRadio::instance = NULL;
 
 extern "C" void RADIO_IRQHandler(void)  // override weak definition in startup_NRF51822.S
 {
+    if(NRF_RADIO->EVENTS_ADDRESS)
+    {
+        if (NRF_RADIO->EVENTS_DEVMATCH)
+            MicroBitRadio::instance->addr_match++;
+        if (NRF_RADIO->EVENTS_DEVMISS)
+            MicroBitRadio::instance->addr_miss++;
+    }
+
     if(NRF_RADIO->EVENTS_READY)
     {
         NRF_RADIO->EVENTS_READY = 0;

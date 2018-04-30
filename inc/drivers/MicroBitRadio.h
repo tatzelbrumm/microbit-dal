@@ -99,6 +99,12 @@ class MicroBitRadio : MicroBitComponent
     FrameBuffer             *rxQueue;   // A linear list of incoming packets, queued awaiting processing.
     FrameBuffer             *rxBuf;     // A pointer to the buffer being actively used by the RADIO hardware.
 
+    /*
+     * CM2018APR12: Added properties
+     */
+    int                     addr_miss;  // # of address mismatches
+    int                     addr_match; // # of address matches
+
     public:
     MicroBitRadioDatagram   datagram;   // A simple datagram service.
     MicroBitRadioEvent      event;      // A simple event handling service.
