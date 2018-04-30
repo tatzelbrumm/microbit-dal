@@ -57,7 +57,7 @@ DEALINGS IN THE SOFTWARE.
 
 MicroBitRadio* MicroBitRadio::instance = NULL;
 
-extern "C" void RADIO_IRQHandler(void)
+extern "C" void RADIO_IRQHandler(void)  // override weak definition in startup_NRF51822.S
 {
     if(NRF_RADIO->EVENTS_READY)
     {
